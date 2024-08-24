@@ -2,12 +2,13 @@ import React from "react";
 import Course from "../services/Course";
 import toast from "react-hot-toast";
 
-const DeleteModal = ({ setModal, data }) => {
+const DeleteModal = ({ setModal, data, removeCourse}) => {
   const deleteCourse = async (id) => {
     try {
       const del = await Course.deleteCourse(id);
-      setModal(false);
+      removeCourse(id);
       toast.success(del.data.message);
+      setModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -15,7 +16,7 @@ const DeleteModal = ({ setModal, data }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={()=>setModal(false)}></div>
-      <div className="relative p-4 bg-white md:p-8 border rounded-md w-11/12 md:w-1/2 mx-auto">
+      <div className="relative p-4 bg-white md:p-8 border rounded-md w-11/12 md:w-1/2 mx-auto max-h-screen overflow-y-auto">
         <p className="text-lg md:text-2xl font-bold py-4 ">
           Are you sure you want to delete this course?
         </p>

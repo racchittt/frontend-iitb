@@ -30,6 +30,7 @@ const AddInstance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if(year.length === 4 && !isNaN(year) && !isNaN(sem) && sem.length > 0  && sem < 3 && courseId ){
     try {
       let body = {
         year: year,
@@ -40,11 +41,19 @@ const AddInstance = () => {
       console.log(result);
       console.log(result.data.message);
       toast.success(result.data.message);
+      setYear("")
+      setSem("")
+      setCourseId("")
       setLoading(false);
     } catch (e) {
       console.log(e);
       toast.error(e)
     }
+  }
+  else{
+    toast.error("Check your input")
+    setLoading(false)
+  }
   };
 
   return (
@@ -54,6 +63,7 @@ const AddInstance = () => {
           <select
             name="courses"
             id="courses"
+            value={courseId}
             onChange={(e) => setCourseId(e.target.value)}
             className="border rounded-md px-3 py-2 w-2/3"
           >
@@ -80,7 +90,7 @@ const AddInstance = () => {
             className="py-2 px-4 rounded-md border "
             name="year"
             id="year"
-            minLength={4}
+            value={year}
             placeholder="Year"
             onChange={(e) => setYear(e.target.value)}
             required
@@ -90,6 +100,7 @@ const AddInstance = () => {
             className="py-2 px-4 rounded-md border "
             name="sem"
             id="sem"
+            value={sem}
             placeholder="Semester"
             onChange={(e) => setSem(e.target.value)}
             required

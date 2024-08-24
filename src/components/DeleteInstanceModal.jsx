@@ -2,11 +2,12 @@ import React from "react";
 import Instance from "../services/Instance";
 import toast from "react-hot-toast";
 
-const DeleteInstanceModal = ({ setModal, data }) => {
+const DeleteInstanceModal = ({ setModal, data, removeInstance }) => {
   const deleteInstance = async (id, sem, year) => {
     try {
       const del = await Instance.deleteInstance(year, sem, id);
       toast.success(del.data.message);
+      removeInstance(id,year,sem)
       setModal(false);
     } catch (error) {
       console.log(error);
@@ -19,7 +20,7 @@ const DeleteInstanceModal = ({ setModal, data }) => {
         className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
         onClick={() => setModal(false)}
       ></div>
-      <div className="relative p-4 bg-white border rounded-md  w-11/12 lg:w-1/2 mx-auto">
+      <div className="relative p-4 bg-white border rounded-md  w-11/12 lg:w-1/2 mx-auto max-h-screen overflow-y-auto">
         <p className="text-xl md:text-2xl font-bold py-4 ">
           Are you sure you want to delete this Instance?
         </p>

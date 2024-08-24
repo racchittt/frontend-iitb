@@ -5,12 +5,13 @@ import InstanceModal from "./InstanceModal";
 import DeleteInstanceModal from "./DeleteInstanceModal";
 import SearchIcon from "@mui/icons-material/Search";
 import Delete from "@mui/icons-material/Delete";
+import toast from "react-hot-toast";
 
 const ListInstances = () => {
   const [loading, setLoading] = useState(false);
-  const [year, setYear] = useState();
+  const [year, setYear] = useState("");
   const [semester, setSemester] = useState([]);
-  const [sem, setSem] = useState();
+  const [sem, setSem] = useState("");
   const [instances, setInstances] = useState([]);
   const [instanceModal, setInstanceModal] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,16 +19,18 @@ const ListInstances = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    try {
-      const res = await Instance.getInstance(year, sem);
-    //   console.log(res.data);
-      setInstances(res.data.data);
-      //   alert(res.data.message)
-    } catch (error) {
-      console.log(error);
-    }
-    finally{
-        setLoading(false)
+    if (year.length === 4 && sem.length > 0) {
+      try {
+        const res = await Instance.getInstance(year, sem);
+        setInstances(res.data.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error("Check your input");
+      setLoading(false);
     }
   };
 
@@ -64,6 +67,14 @@ const ListInstances = () => {
     } catch (error) {
       console.log(error);
     }
+  }
+  const removeInstance = (id, year, sem) => {
+    setInstances((prevInstances) =>
+      prevInstances.filter(
+        (instance) =>
+          !(instance.course.id === id && instance.year === year && instance.sem === sem)
+      )
+    );
   };
   return (
     <div className="flex flex-col items-center justify-center w-full gap-6 py-4">
@@ -118,37 +129,37 @@ const ListInstances = () => {
               Action
             </th>
           </thead>
-          {instances.map((instances) => (
-            <tr className="border odd:bg-blue-100">
-              <td className="p-2">{instances.course.title}</td>
+          {instances.map((instance) => (
+            <tr key={instance.id} className="border odd:bg-blue-100">
+              <td className="p-2">{instance.course.title}</td>
               <td className="p-2">
-                {instances.year}-{instances.sem}
+                {instance.year}-{instance.sem}
               </td>
-              <td className="p-2">{instances.course.courseId}</td>
+              <td className="p-2">{instance.course.courseId}</td>
               <td className="p-2 flex gap-4">
                 <button
                   type="button"
                   onClick={() =>
                     openModal(
-                      instances.course.id,
-                      instances.year,
-                      instances.sem
+                      instance.course.id,
+                      instance.year,
+                      instance.sem
                     )
                   }
                 >
-                  <SearchIcon className="bg-black text-white rounded-sm"/>
+                  <SearchIcon className="bg-black text-white rounded-sm" />
                 </button>
                 <button
                   type="button"
                   onClick={() =>
                     openDeleteModal(
-                      instances.course.id,
-                      instances.year,
-                      instances.sem
+                      instance.course.id,
+                      instance.year,
+                      instance.sem
                     )
                   }
                 >
-                  <Delete/>
+                  <Delete />
                 </button>
               </td>
             </tr>
@@ -162,6 +173,7 @@ const ListInstances = () => {
         <DeleteInstanceModal
           setModal={setIsDeleteModalOpen}
           data={instanceModal}
+          removeInstance={removeInstance}
         />
       )}
     </div>

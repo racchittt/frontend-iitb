@@ -7,7 +7,7 @@ const InstanceModal = ({ setModal, data }) => {
         className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
         onClick={() => setModal(false)}
       ></div>
-      <div className="relative p-4 bg-white border rounded-md  w-11/12 lg:w-1/2 mx-auto">
+      <div className="relative p-4 bg-white border rounded-md w-11/12 lg:w-1/2 mx-auto max-h-screen overflow-y-auto">
         <div className="bg-gray-100 rounded-md">
           <div className="flex flex-col lg:flex-row justify-between px-4 md:px-8">
             <p className="py-2 md:py-4 md:text-xl">
