@@ -28,7 +28,7 @@ const AddCourse = () => {
     }
   }
   return (
-    <div className='py-8'>
+    <div className='py-8 px-4 md:px-0 w-full'>
       <form action="" >
         <div className='flex flex-col p-4 gap-6'>
           <input type="text" className='py-2 px-4 rounded-md border ' name='title' id='title' placeholder='Course title' onChange={(e) => setTitle(e.target.value)} required/>

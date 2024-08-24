@@ -1,8 +1,8 @@
 import React from "react";
 
-const Modal = ({ setModal, data }) => {
+const CourseModal = ({ setModal, data }) => {
   return (
-    <div className="p-4 bg-white bg-opacity-90 border rounded-md z-50 fixed">
+    <div className="p-4 bg-white border rounded-md z-50 fixed w-1/2">
       <div className="bg-gray-100 rounded-md">
         <div className="flex justify-between px-8">
         <p className="py-4 text-xl"><span className="font-bold">Course ID:</span> {data.id}</p>
@@ -20,4 +20,4 @@ const Modal = ({ setModal, data }) => {
   );
 };
 
-export default Modal;
+export default CourseModal;

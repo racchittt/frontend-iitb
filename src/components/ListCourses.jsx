@@ -1,13 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import Course from "../services/Course";
-import Modal from "./Modal";
+import CourseModal from "./CourseModal";
 import DeleteModal from "./DeleteModal";
 
 const ListCourses = () => {
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState([]);
-  const [coursebyId, setCoursebyId] = useState([]);
   const [courseModal, setCourseModal] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -28,7 +27,8 @@ const ListCourses = () => {
   const openModal = async (id) => {
     try {
       const res = await Course.getCourseById(id);
-      // console.log(res.data);
+      console.log(res.data);
+      console.log(res.data.data)
       setCourseModal(res.data.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -45,7 +45,7 @@ const ListCourses = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center gap-8 w-full py-4">
+    <div className="flex flex-col items-center gap-8 md:w-1/2 py-4">
       <button
         className="py-2 px-4 w-1/4 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-md text-center"
         onClick={(e) => handleSubmit(e)}
@@ -85,7 +85,7 @@ const ListCourses = () => {
           ))}
         </table>
       )}
-      {isModalOpen && <Modal setModal={setIsModalOpen} data={courseModal} />}
+      {isModalOpen && <CourseModal setModal={setIsModalOpen} data={courseModal} />}
       {isDeleteModalOpen && (
         <DeleteModal setModal={setIsDeleteModalOpen} data={courseModal} />
       )}

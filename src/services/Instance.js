@@ -8,6 +8,15 @@ class Instance {
             throw error;
         }
     }
+
+    getInstaceByYear(year){
+        try {
+            return axios.get(`http://localhost:8080/api/instances/${year}`)
+        } catch (error) {
+            throw error
+        }
+    }
+
     getInstance(year,sem){
         try {
             return axios.get(`http://localhost:8080/api/instances/${year}/${sem}`)
