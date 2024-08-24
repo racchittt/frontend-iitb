@@ -3,6 +3,8 @@ import Instance from "../services/Instance";
 import { useState } from "react";
 import InstanceModal from "./InstanceModal";
 import DeleteInstanceModal from "./DeleteInstanceModal";
+import SearchIcon from "@mui/icons-material/Search";
+import Delete from "@mui/icons-material/Delete";
 
 const ListInstances = () => {
   const [loading, setLoading] = useState(false);
@@ -64,9 +66,9 @@ const ListInstances = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center gap-8 md:w-1/2 py-4">
+    <div className="flex flex-col items-center justify-center w-full gap-6 py-4">
       <form action="" className="">
-        <div className="flex gap-6 py-4">
+        <div className="flex flex-col md:flex-row gap-6 py-4">
           <input
             type="text"
             className="py-2 px-4 rounded-md border "
@@ -80,7 +82,7 @@ const ListInstances = () => {
             name="sem"
             id="sem"
             onChange={(e) => setSem(e.target.value)}
-            className="border rounded-md px-3"
+            className="border rounded-md px-3 py-2"
           >
             <option value="" disabled={true} selected>
               {"Select Semester"}
@@ -92,7 +94,7 @@ const ListInstances = () => {
             ))}
           </select>
           <button
-            className="py-2 px-4 w-1/4 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-md text-center"
+            className="py-2 px-4 w-full lg:w-1/4 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-md text-center"
             onClick={(e) => handleSubmit(e)}
             disabled={loading}
           >
@@ -101,7 +103,7 @@ const ListInstances = () => {
         </div>
       </form>
       {instances.length > 0 && (
-        <table className="py-8 w-full ">
+        <table className="py-8 w-full lg:w-1/2 ">
           <thead>
             <th className="border p-2 bg-blue-500 text-white font-medium w-3/5">
               Course Title
@@ -134,7 +136,7 @@ const ListInstances = () => {
                     )
                   }
                 >
-                  View
+                  <SearchIcon className="bg-black text-white rounded-sm"/>
                 </button>
                 <button
                   type="button"
@@ -146,7 +148,7 @@ const ListInstances = () => {
                     )
                   }
                 >
-                  Delete
+                  <Delete/>
                 </button>
               </td>
             </tr>

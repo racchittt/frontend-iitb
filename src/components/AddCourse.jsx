@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import Course from '../services/Course'
+import toast from 'react-hot-toast';
 
 const AddCourse = () => {
   
@@ -20,11 +21,12 @@ const AddCourse = () => {
       }
       let result = await Course.addCourse(body);
       console.log(result)
-      alert(result.data.message)
+      toast.success(result.data.message)
       setLoading(false)
     }
     catch(e){
       console.log(e)
+      toast.error(e)
     }
   }
   return (

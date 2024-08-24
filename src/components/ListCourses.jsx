@@ -3,6 +3,8 @@ import { useState } from "react";
 import Course from "../services/Course";
 import CourseModal from "./CourseModal";
 import DeleteModal from "./DeleteModal";
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListCourses = () => {
   const [loading, setLoading] = useState(false);
@@ -17,10 +19,11 @@ const ListCourses = () => {
       const res = await Course.getAllCourses();
       console.log(res.data);
       setCourse(res.data.data);
-    //   alert(res.data.message)
       setLoading(false);
+      toast.success(res.data.message)
     } catch (error) {
       console.log(error);
+      toast.error(error)
     }
   };
 
@@ -28,7 +31,7 @@ const ListCourses = () => {
     try {
       const res = await Course.getCourseById(id);
       console.log(res.data);
-      console.log(res.data.data)
+      console.log(res.data.data);
       setCourseModal(res.data.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -38,16 +41,16 @@ const ListCourses = () => {
   const openDeleteModal = async (id) => {
     try {
       const res = await Course.getCourseById(id);
-      setCourseModal(res.data.data)
-      setIsDeleteModalOpen(true)
+      setCourseModal(res.data.data);
+      setIsDeleteModalOpen(true);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
   return (
     <div className="flex flex-col items-center gap-8 md:w-1/2 py-4">
       <button
-        className="py-2 px-4 w-1/4 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-md text-center"
+        className="py-2 px-4 lg:w-1/4 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-md text-center"
         onClick={(e) => handleSubmit(e)}
         disabled={loading}
       >
@@ -56,7 +59,7 @@ const ListCourses = () => {
       {course.length > 0 && (
         <table className="py-8 w-full ">
           <tr>
-            <th className="border p-2 bg-blue-500 text-white font-medium w-3/5">
+            <th className="border p-2 bg-blue-500 text-white font-medium w-4/5">
               Course Title
             </th>
             <th className="border p-2 bg-blue-500 text-white font-medium w-1/5">
@@ -72,20 +75,22 @@ const ListCourses = () => {
               <td className="p-2">{course.courseId}</td>
               <td className="p-2 flex gap-4">
                 <button type="button" onClick={() => openModal(course.id)}>
-                  View
+                  <SearchIcon className="bg-black text-white rounded-sm"/>
                 </button>
                 <button
                   type="button"
                   onClick={() => openDeleteModal(course.id)}
                 >
-                  Delete
+                  <DeleteIcon />
                 </button>
               </td>
             </tr>
           ))}
         </table>
       )}
-      {isModalOpen && <CourseModal setModal={setIsModalOpen} data={courseModal} />}
+      {isModalOpen && (
+        <CourseModal setModal={setIsModalOpen} data={courseModal} />
+      )}
       {isDeleteModalOpen && (
         <DeleteModal setModal={setIsDeleteModalOpen} data={courseModal} />
       )}
