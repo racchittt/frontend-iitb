@@ -30,7 +30,7 @@ const AddInstance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if(year.length === 4 && !isNaN(year) && !isNaN(sem) && sem.length > 0  && sem < 3 && courseId ){
+    if(year.length === 4 && !isNaN(year) && !isNaN(sem) && sem.length > 0  && sem.length < 3 && courseId ){
     try {
       let body = {
         year: year,
